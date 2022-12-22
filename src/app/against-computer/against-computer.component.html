@@ -1,0 +1,26 @@
+<section>
+
+  <h2>Chose hand to play!</h2>
+
+  <ul>
+    <li [class.selected]="selectedHandtype == 'rock'">
+      <img src="assets/rock.jpg" alt="ROCK" (click)="selected('rock')">
+    </li>
+    <li [class.selected]="selectedHandtype == 'paper'">
+      <img src="assets/paper.jpg" alt="PAPER" (click)="selected('paper')">
+    </li>
+    <li [class.selected]="selectedHandtype == 'scissor'">
+      <img src="assets/scissor.jpg" alt="SCISSOR" (click)="selected('scissor')">
+    </li>
+  </ul>
+
+  <button (click)="playSelectedHand()" [disabled]="!canPlay()">Play Hand</button>
+
+  <img src="assets/count-down.gif" alt="countdown" *ngIf="visibleHandShaking">
+
+  <div *ngIf="isResultVisible">
+    <h2> you {{resultTitle}} because your oponent was is: </h2>
+    <img src="assets/{{oponent_hand.toLowerCase()}}.jpg" alt="{{oponent_hand}}">
+  </div>
+
+</section>

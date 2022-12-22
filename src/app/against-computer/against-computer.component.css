@@ -1,0 +1,15 @@
+section{
+  align-content: center;
+  text-align: center;
+}
+
+ul li{
+  display: inline-block;
+  margin: 1% ;
+}
+.selected{
+  border-bottom: 5px green dotted;
+}
+img{
+  cursor: grab;
+}
