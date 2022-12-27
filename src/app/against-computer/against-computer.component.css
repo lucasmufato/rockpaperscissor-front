@@ -13,3 +13,7 @@ ul li{
 img{
   cursor: grab;
 }
+button{
+  display: block;
+  margin: 0 auto;
+}

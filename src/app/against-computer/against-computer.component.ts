@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {PlayHandService} from "../services/play-hand-service";
 import {ContestResult} from "../model/contest-result";
+import {combineLatest, delay, Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-against-computer',
@@ -31,15 +32,20 @@ export class AgainstComputerComponent {
 
   playSelectedHand() {
     console.log("wants to play")
-
     if (this.canPlay()){
       this.isResultVisible = false
       this.showHandShaking()
-      this.backend.playHand(this.selectedHandtype).subscribe({
-        next:(result) => this.showContestResult(result),
-        error:(err) => this.showError(err)
-      })
+      this.playHandWhileWaitingForAnimation()
     }
+  }
+
+  private playHandWhileWaitingForAnimation() {
+    let contestResultObservable = this.backend.playHand(this.selectedHandtype);
+    let waitTwoSecondsObservable = this.waitToSeconds()
+    combineLatest([contestResultObservable,waitTwoSecondsObservable]).subscribe({
+      next:([result,_]) => this.showContestResult(result),
+      error:(err) => this.showError(err)
+    })
   }
 
   private showError(err: any) {
@@ -62,4 +68,9 @@ export class AgainstComputerComponent {
     this.oponent_hand = contestResult.opposing_hand
     this.isResultVisible = true
   }
+
+  private waitToSeconds(): Observable<any> {
+    return of("discard").pipe(delay(3000))
+  }
+
 }
